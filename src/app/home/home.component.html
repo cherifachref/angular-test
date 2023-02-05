@@ -1,0 +1,95 @@
+<p>home works!</p>
+
+<button class="btn btn-success" (click)="goTodAbout()" >go to about</button>
+
+<h1>{{firstName}}</h1>
+<h2> {{newName}} </h2>
+<h2 [style]="redColor">{{myBest.angular}}</h2>
+<img [src]="imageLink">
+
+<h1>{{number}}</h1>
+
+<button (click)="up()"> up </button>
+<button (click)="down()">down</button>
+<br/><br/>
+
+<input type="text" [(ngModel)]="number">
+<input type="text" [(ngModel)]="myBest.angular">
+
+<p *ngIf="verif">Test Verif</p>
+
+
+<div [ngClass]=" paysFlexClass ">
+    <div *ngFor="let item of pays; index as i">
+        <!-- pipe | ** -->
+        <p> {{i+1}}:{{item | uppercase}}-- </p>
+    </div>
+</div>
+
+<div [ngClass]=" 'num' " [ngSwitch]="number">
+    <p *ngSwitchCase="1">one</p>
+    <p *ngSwitchCase="2">two</p>
+    <p *ngSwitchCase="99">ninety nine</p>
+</div>
+
+<p [ngStyle]=" {'color':style1,'font-size':style2, 'text-decoration':style3} " > ngStyle</p>
+
+
+<form #f="ngForm" (ngSubmit)="add(f)">
+    <input type="text" name="firtName" id="" placeholder="firstName" ngModel #firstName="ngModel" minlength="5" required>
+
+    <!-- alert -->
+    <div class="alert alert-danger" *ngIf="firstName.errors?.required && firstName.touched">
+        this firstName is required
+    </div>
+
+    <div class="alert alert-danger" *ngIf="firstName.errors?.minlength && firstName.touched">
+        this firstName minlength 5
+    </div>
+
+    <!-- end alert -->
+
+    <input type="text" name="lastName" id="" placeholder="lastName" ngModel required="">
+
+    <input type="number" name="age" id="" placeholder="age" ngModel>
+
+    <button type="submit" [disabled]="f.invalid" >Add</button>
+    
+</form>
+<br>
+
+<form [formGroup]="myForm2" (ngSubmit)="print()">
+    <input type="text" formControlName="fname" placeholder="fname" >
+    <!-- alert -->
+    <div class="alert alert-danger" *ngIf="fname.touched && myForm2.get('fname').hasError('required') ">this name is required</div>
+    <div class="alert alert-danger" *ngIf="myForm2.get('fname').touched && myForm2.get('fname').hasError('minlength')">min 5 car</div>
+    <!-- alert -->
+    <input type="text" formControlName="age" placeholder="age">
+    <input type="text" formControlName="email" placeholder="email">
+    <div class="alert alert-danger" *ngIf="myForm2.get('email').touched && myForm2.get('email').hasError('required')">this email required</div>
+    <div class="alert alert-danger" *ngIf="myForm2.get('email').hasError('email') && myForm2.get('email')._pendingToutched ==false" >this is not email forme</div>
+
+    <br>
+    <div formArrayName="items">
+        <div *ngFor="let item of myForm2.controls.items['controls'];index as i" [formGroupName]="i">
+            <input type="text" formControlName="id" placeholder="id">
+            <input type="text" formControlName="title" placeholder="title">
+            <button (click)="delete(i)">delete</button>
+        </div>
+        
+    </div>
+    <button (click)="addnew()">add new</button>
+
+    <button type="submit" [disabled]="myForm2.invalid">Print</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
